@@ -22,4 +22,10 @@ public class GlobalExceptionHandler {
         ApiResponse<Map<String, String>> response = new ApiResponse<>(errors);
         return ResponseEntity.badRequest().body(response);
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ApiResponse<?>> handleRuntimeException(RuntimeException ex) {
+        ApiResponse<String> response = new ApiResponse<>(ex.getMessage());
+        return ResponseEntity.badRequest().body(response);
+    }
 }
