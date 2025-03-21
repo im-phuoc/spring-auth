@@ -4,7 +4,7 @@ import com.spring.springauth.payload.request.LoginRequest;
 import com.spring.springauth.payload.request.RegisterRequest;
 import com.spring.springauth.payload.response.ApiResponse;
 import com.spring.springauth.payload.response.LoginResponse;
-import com.spring.springauth.payload.response.RegisterResponse;
+import com.spring.springauth.payload.response.UserResponse;
 import com.spring.springauth.services.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +28,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<RegisterResponse>> registerUser(@RequestBody @Valid RegisterRequest registerRequest) {
-        RegisterResponse registerResponse = authService.registerUser(registerRequest);
-        return ResponseEntity.ok(new ApiResponse<>(registerResponse));
+    public ResponseEntity<ApiResponse<UserResponse>> registerUser(@RequestBody @Valid RegisterRequest registerRequest) {
+        UserResponse userResponse = authService.registerUser(registerRequest);
+        return ResponseEntity.ok(new ApiResponse<>(userResponse));
     }
 }
