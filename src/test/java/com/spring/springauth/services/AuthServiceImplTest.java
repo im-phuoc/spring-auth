@@ -6,7 +6,7 @@ import com.spring.springauth.models.User;
 import com.spring.springauth.payload.request.LoginRequest;
 import com.spring.springauth.payload.request.RegisterRequest;
 import com.spring.springauth.payload.response.LoginResponse;
-import com.spring.springauth.payload.response.RegisterResponse;
+import com.spring.springauth.payload.response.UserResponse;
 import com.spring.springauth.repository.RoleRepository;
 import com.spring.springauth.repository.UserRepository;
 import com.spring.springauth.security.jwt.JwtUtils;
@@ -123,7 +123,7 @@ public class AuthServiceImplTest {
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
-        RegisterResponse response = authService.registerUser(registerRequest);
+        UserResponse response = authService.registerUser(registerRequest);
 
         // Assert
         assertNotNull(response);
