@@ -7,36 +7,26 @@ on:
     branches: [master]
 
 jobs:
-  test-and-deploy:
+  test:
     runs-on: ubuntu-latest
     
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
+      
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-
+          
       - name: Run Tests
         run: |
           echo "Starting tests..."
           mvn test
           echo "Tests completed."
-
+        
       - name: Build with Maven
         if: success()
         run: mvn -B package --file pom.xml
-
-      - name: Install Railway CLI
-        if: success()
-        run: npm install -g @railway/cli
-
-      - name: Deploy to Railway
-        if: success() && github.ref == 'refs/heads/master'
-        run: railway up --service ${{ secrets.RAILWAY_SERVICE }}
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
