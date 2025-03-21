@@ -2,12 +2,12 @@ package com.spring.springauth.payload.response;
 
 import java.util.Set;
 
-public class RegisterResponse {
+public class UserResponse {
     private String username;
     private String email;
     private Set<String> roles;
 
-    public RegisterResponse(String username, String email, Set<String> roles) {
+    public UserResponse(String username, String email, Set<String> roles) {
         this.username = username;
         this.email = email;
         this.roles = roles;

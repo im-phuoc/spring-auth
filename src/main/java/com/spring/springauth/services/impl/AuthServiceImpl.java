@@ -6,7 +6,7 @@ import com.spring.springauth.models.User;
 import com.spring.springauth.payload.request.LoginRequest;
 import com.spring.springauth.payload.request.RegisterRequest;
 import com.spring.springauth.payload.response.LoginResponse;
-import com.spring.springauth.payload.response.RegisterResponse;
+import com.spring.springauth.payload.response.UserResponse;
 import com.spring.springauth.repository.RoleRepository;
 import com.spring.springauth.repository.UserRepository;
 import com.spring.springauth.security.jwt.JwtUtils;
@@ -59,7 +59,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public RegisterResponse registerUser(RegisterRequest registerRequest) {
+    public UserResponse registerUser(RegisterRequest registerRequest) {
         if (userRepository.existsByUsername(registerRequest.getUsername())) {
             throw new RuntimeException("Username is already in use");
         }
@@ -75,6 +75,6 @@ public class AuthServiceImpl implements AuthService {
         user.setRoles(roles);
         userRepository.save(user);
 
-        return new RegisterResponse(user.getUsername(),user.getEmail(),user.getRoles().stream().map(role->role.getName().name()).collect(Collectors.toSet()));
+        return new UserResponse(user.getUsername(),user.getEmail(),user.getRoles().stream().map(role->role.getName().name()).collect(Collectors.toSet()));
     }
 }
