@@ -23,7 +23,7 @@ public class UserController {
         return ResponseEntity.ok().body(new ApiResponse<>(userService.getAllUsers(page, size)));
     }
 
-    @GetMapping("/intro")
+    @GetMapping("/profile")
     public ResponseEntity<ApiResponse<UserResponse>> introSpec() {
         return ResponseEntity.ok().body(new ApiResponse<>(userService.getProfile()));
     }

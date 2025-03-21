@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
         return new UserResponse(updatedUser.getUsername(),updatedUser.getEmail(),updatedUser.getRoles().stream().map(role -> role.getName().name()).collect(Collectors.toSet()));
     }
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public void deleteUserByUsername(String username) {
         User user = findByUsername(username);
