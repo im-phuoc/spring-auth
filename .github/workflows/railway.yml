@@ -24,46 +24,19 @@ jobs:
       - name: Run Tests
         run: |
           echo "Starting tests..."
-          mvn test -B --fail-at-end surefire-report:report jacoco:report
+          mvn test
           echo "Tests completed."
-
-      - name: Publish Test Report
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-report
-          path: |
-            target/site/surefire-report.html
-            target/site/jacoco/
-
-      - name: Check Test Results
-        run: |
-          echo "Checking test results..."
-          if [ -f target/surefire-reports/TEST-*.xml ]; then
-            if grep -q "<failure" target/surefire-reports/TEST-*.xml || grep -q "<error" target/surefire-reports/TEST-*.xml; then
-              echo "Tests failed!"
-              exit 1
-            else
-              echo "All tests passed!"
-            fi
-          else
-            echo "No test results found!"
-            exit 1
-          fi
 
       - name: Build with Maven
         if: success()
-        run: |
-          echo "Starting build..."
-          mvn -B package --file pom.xml
-          echo "Build completed."
+        run: mvn -B package --file pom.xml
 
       - name: Install Railway CLI
         if: success()
         run: npm install -g @railway/cli
 
       - name: Deploy to Railway
-        if: success() && github.ref == 'refs/heads/main'
+        if: success() && github.ref == 'refs/heads/master'
         run: railway up
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY }} 
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY }}
