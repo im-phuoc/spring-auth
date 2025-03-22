@@ -2,6 +2,7 @@ package com.spring.springauth.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.springauth.payload.response.ApiResponse;
+import com.spring.springauth.payload.response.ErrorMessage;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,7 +21,7 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
-        ApiResponse<String> apiResponse = new ApiResponse<>(authException.getMessage());
+        ApiResponse<ErrorMessage> apiResponse = new ApiResponse<>(new ErrorMessage(authException.getMessage()));
 
         final ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(response.getOutputStream(), apiResponse);

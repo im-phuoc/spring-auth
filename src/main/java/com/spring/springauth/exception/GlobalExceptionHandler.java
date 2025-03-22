@@ -1,6 +1,7 @@
 package com.spring.springauth.exception;
 
 import com.spring.springauth.payload.response.ApiResponse;
+import com.spring.springauth.payload.response.ErrorMessage;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -25,7 +26,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ApiResponse<?>> handleRuntimeException(RuntimeException ex) {
-        ApiResponse<String> response = new ApiResponse<>(ex.getMessage());
+        ApiResponse<ErrorMessage> response = new ApiResponse<>(new ErrorMessage(ex.getMessage()));
         return ResponseEntity.badRequest().body(response);
     }
 }
