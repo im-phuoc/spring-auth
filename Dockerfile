@@ -1,12 +1,18 @@
 # Build stage
 FROM maven:3.9-amazoncorretto-17 AS builder
 WORKDIR /app
-COPY backend/pom.xml .
-COPY backend/src ./src
-COPY backend/.mvn ./.mvn
-COPY backend/mvnw .
-COPY backend/mvnw.cmd .
+
+# Copy maven files first
+COPY backend/.mvn/ ./.mvn/
+COPY backend/mvnw backend/mvnw.cmd ./
 RUN chmod +x mvnw
+
+# Copy pom.xml and download dependencies
+COPY backend/pom.xml .
+RUN ./mvnw dependency:go-offline
+
+# Copy source code and build
+COPY backend/src ./src
 RUN ./mvnw clean package -DskipTests
 
 # Runtime stage
