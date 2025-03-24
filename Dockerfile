@@ -1,9 +1,13 @@
 # Build stage
 FROM maven:3.9-amazoncorretto-17 AS builder
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-RUN mvn clean package -DskipTests
+COPY backend/pom.xml .
+COPY backend/src ./src
+COPY backend/.mvn ./.mvn
+COPY backend/mvnw .
+COPY backend/mvnw.cmd .
+RUN chmod +x mvnw
+RUN ./mvnw clean package -DskipTests
 
 # Runtime stage
 FROM amazoncorretto:17-alpine
