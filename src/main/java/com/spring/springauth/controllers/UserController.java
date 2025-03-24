@@ -2,12 +2,16 @@ package com.spring.springauth.controllers;
 
 import com.spring.springauth.payload.request.UpdateRoleRequest;
 import com.spring.springauth.payload.response.ApiResponse;
+import com.spring.springauth.payload.response.ErrorMessage;
 import com.spring.springauth.payload.response.PagedResponse;
 import com.spring.springauth.payload.response.UserResponse;
 import com.spring.springauth.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -39,8 +43,10 @@ public class UserController {
     }
 
     @DeleteMapping("/{username}")
-    public ResponseEntity<ApiResponse<String>> deleteUserByUsername(@PathVariable String username) {
+    public ResponseEntity<ApiResponse<Map<String,String>>> deleteUserByUsername(@PathVariable String username) {
         userService.deleteUserByUsername(username);
-        return ResponseEntity.ok().body(new ApiResponse<>("User with username '" + username + "' has been deleted successfully"));
+        Map<String,String> message = new HashMap<>();
+        message.put("message","User " +username+ " has been deleted successfully");
+        return ResponseEntity.ok().body(new ApiResponse<>(message));
     }
 }
