@@ -127,7 +127,7 @@ public class UserServiceImplTest {
     public void testUpdateRoleByUsername_success() {
         // Arrange
         when(userRepository.findByUsername("user")).thenReturn(Optional.of(user));
-        Set<String> updateRoles = new HashSet<>(Set.of(ERole.ROLE_MODERATOR.name(),ERole.ROLE_ADMIN.name()));
+        Set<String> updateRoles = new HashSet<>(Set.of(ERole.ROLE_USER.name(),ERole.ROLE_ADMIN.name()));
         for (String role : updateRoles) {
             when(roleRepository.findByName(ERole.valueOf(role))).thenReturn(Optional.of(new Role(ERole.valueOf(role))));
         }
@@ -141,7 +141,7 @@ public class UserServiceImplTest {
         assertNotNull(userResponse);
         assertEquals("user", userResponse.getUsername());
         assertEquals("user@email.com", userResponse.getEmail());
-        assertEquals(Set.of(ERole.ROLE_ADMIN.name(),ERole.ROLE_MODERATOR.name()), userResponse.getRoles());
+        assertEquals(Set.of(ERole.ROLE_ADMIN.name(),ERole.ROLE_USER.name()), userResponse.getRoles());
         verify(userRepository, times(1)).findByUsername("user");
         verify(roleRepository, times(2)).findByName(any());
         verify(userRepository, times(1)).save(user);
@@ -151,7 +151,7 @@ public class UserServiceImplTest {
     public void testUpdateRoleByUsername_UserNotFound() {
         // Arrange
         when(userRepository.findByUsername("unknown")).thenReturn(Optional.empty());
-        UpdateRoleRequest updateRoleRequest = new UpdateRoleRequest(Set.of(ERole.ROLE_MODERATOR.name()));
+        UpdateRoleRequest updateRoleRequest = new UpdateRoleRequest(Set.of(ERole.ROLE_USER.name()));
 
         // Act & Assert
         RuntimeException exception = assertThrows(RuntimeException.class, () -> userService.updateRoleByUsername("unknown",updateRoleRequest));

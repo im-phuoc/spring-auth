@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
-    @PreAuthorize("hasAnyRole('ADMIN','MODERATOR')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @Override
     public PagedResponse<UserResponse> getAllUsers(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
         return new UserResponse(userDetails.getUsername(),userDetails.getEmail(),userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet()));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','MODERATOR')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public UserResponse getUserByUsername(String username) {
         User user = findByUsername(username);

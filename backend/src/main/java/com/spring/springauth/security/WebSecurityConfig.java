@@ -98,11 +98,6 @@ public class WebSecurityConfig {
                         return roleRepository.save(newUserRole);
                     });
 
-            Role moderatorRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-                    .orElseGet(() -> {
-                        Role newSellerRole = new Role(ERole.ROLE_MODERATOR);
-                        return roleRepository.save(newSellerRole);
-                    });
 
             Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                     .orElseGet(() -> {
@@ -117,7 +112,6 @@ public class WebSecurityConfig {
             userRepository.findByUsername("admin").ifPresent(admin -> {
                 Set<Role> roles = new HashSet<>();
                 roles.add(userRole);
-                roles.add(moderatorRole);
                 roles.add(adminRole);
                 admin.setRoles(roles);
                 userRepository.save(admin);
