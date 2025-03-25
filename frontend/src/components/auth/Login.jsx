@@ -18,7 +18,6 @@ const Login = () => {
     register,
     formState: { errors, isDirty },
     handleSubmit,
-    setError,
     clearErrors,
     reset,
     watch,
@@ -52,7 +51,7 @@ const Login = () => {
       if (result.success) {
         toast.success("Login successful");
         reset();
-        navigate("/dashboard");
+        navigate("/");
       } else {
         setHasError(true);
         toast.error(result.message);
@@ -67,60 +66,62 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <Card className="w-full max-w-sm">
-        <h1 className="text-2xl font-semibold text-gray-900 mb-6">Sign in</h1>
+    <MainLayout>
+      <div className="flex items-center justify-center p-4">
+        <Card className="w-full max-w-sm">
+          <h1 className="text-2xl font-semibold text-gray-900 mb-6">Sign in</h1>
 
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="space-y-4"
-          noValidate
-        >
-          <Input
-            label="Username"
-            type="text"
-            disabled={isSubmitting}
-            {...register("username", {
-              required: "Username is required",
-              minLength: {
-                value: 2,
-                message: "Username must be between 2 and 20 characters",
-              },
-              maxLength: {
-                value: 20,
-                message: "Username must be between 2 and 20 characters",
-              },
-            })}
-            error={errors.username?.message}
-            className={errors.username ? "border-red-500" : ""}
-          />
-
-          <Input
-            label="Password"
-            type="password"
-            disabled={isSubmitting}
-            {...register("password", {
-              required: "Password is required",
-              minLength: {
-                value: 6,
-                message: "Password must be at least 6 characters",
-              },
-            })}
-            error={errors.password?.message}
-            className={errors.password ? "border-red-500" : ""}
-          />
-
-          <Button
-            type="submit"
-            loading={isSubmitting}
-            disabled={isSubmitting}
-            className="w-full"
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4"
+            noValidate
           >
-            {isSubmitting ? "Signing in..." : "Sign in"}
-          </Button>
-        </form>
-      </Card>
-    </div>
+            <Input
+              label="Username"
+              type="text"
+              disabled={isSubmitting}
+              {...register("username", {
+                required: "Username is required",
+                minLength: {
+                  value: 2,
+                  message: "Username must be between 2 and 20 characters",
+                },
+                maxLength: {
+                  value: 20,
+                  message: "Username must be between 2 and 20 characters",
+                },
+              })}
+              error={errors.username?.message}
+              className={errors.username ? "border-red-500" : ""}
+            />
+
+            <Input
+              label="Password"
+              type="password"
+              disabled={isSubmitting}
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+              })}
+              error={errors.password?.message}
+              className={errors.password ? "border-red-500" : ""}
+            />
+
+            <Button
+              type="submit"
+              loading={isSubmitting}
+              disabled={isSubmitting}
+              className="w-full"
+            >
+              {isSubmitting ? "Signing in..." : "Sign in"}
+            </Button>
+          </form>
+        </Card>
+      </div>
+    </MainLayout>
   );
 };
 
