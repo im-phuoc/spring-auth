@@ -88,7 +88,7 @@ const MainLayout = ({ children }) => {
       <footer className="flex-none h-16 bg-white shadow-md">
         <div className="h-full max-w-7xl mx-auto px-4 flex items-center justify-center">
           <p className="text-gray-500 text-sm">
-            © 2024 My App. All rights reserved.
+            © 2025 Spring Auth. All rights reserved.
           </p>
         </div>
       </footer>
