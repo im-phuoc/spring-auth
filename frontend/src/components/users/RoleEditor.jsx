@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import userService from '../../services/user.service';
 import Button from '../common/Button';
 import Input from '../common/Input';
+import toast from 'react-hot-toast';
 
 const RoleEditor = ({ user, onRolesUpdated, onCancel }) => {
   const [selectedRoles, setSelectedRoles] = useState({
     ROLE_USER: false,
     ROLE_ADMIN: false
   });
-  const [updateMessage, setUpdateMessage] = useState({ type: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -37,16 +37,13 @@ const RoleEditor = ({ user, onRolesUpdated, onCancel }) => {
       const result = await userService.updateUserRoles(user.username, roles);
       
       if (result.success) {
-        setUpdateMessage({ type: 'success', message: 'Roles updated successfully' });
+        toast.success('Roles updated successfully');
         onRolesUpdated(roles);
       } else {
-        setUpdateMessage({ type: 'error', message: result.message });
+        toast.error(result.message);
       }
     } catch (err) {
-      setUpdateMessage({ 
-        type: 'error', 
-        message: err.response?.data?.data?.message || 'Failed to update roles' 
-      });
+      toast.error(err.response?.data?.data?.message || 'Failed to update roles');
     } finally {
       setIsSubmitting(false);
     }
@@ -54,16 +51,6 @@ const RoleEditor = ({ user, onRolesUpdated, onCancel }) => {
 
   return (
     <div className="space-y-4">
-      {updateMessage.message && (
-        <div className={`px-4 py-3 rounded ${
-          updateMessage.type === 'success' 
-            ? 'bg-green-50 text-green-800' 
-            : 'bg-red-50 text-red-800'
-        }`}>
-          {updateMessage.message}
-        </div>
-      )}
-
       <div className="space-y-2">
         <Input
           type="checkbox"
