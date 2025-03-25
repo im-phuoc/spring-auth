@@ -16,27 +16,8 @@ const Home = () => {
             </h1>
           ) : (
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              You are authenticated
+              You are not logged in
             </h1>
-          )}
-          <p className="text-lg text-gray-600 mb-8">
-            A secure authentication system built with Spring Boot and React
-          </p>
-          {!isAuthenticated && (
-            <div className="flex flex-row items-center justify-center gap-4">
-              <Link
-                to="/login"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg text-base font-medium transition-colors"
-              >
-                Get Started
-              </Link>
-              <Link
-                to="/register"
-                className="bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 px-6 py-2 rounded-lg text-base font-medium transition-colors"
-              >
-                Create Account
-              </Link>
-            </div>
           )}
         </div>
       </div>
